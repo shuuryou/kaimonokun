@@ -11,6 +11,7 @@ var m_ItemTemplate, m_ListTemplate;
 var m_Mode, m_CurrentListId, m_CurrentDigest;
 var m_EventSource;
 var m_IsEditing, m_UpdatePending;
+var m_OldScroll;
 
 $(document).ready(function()
 {
@@ -36,6 +37,7 @@ $(document).ready(function()
 	m_EventSource = null;
 	m_IsEditing = false;
 	m_UpdatePending = false;
+	m_OldScroll = null;
 
 	$(window).on('beforeunload', function()
 	{
@@ -513,6 +515,8 @@ function handleEdit(event)
 		return;
 
 	m_IsEditing = true;
+	
+	el.attr('draggable', 'false'); // Required to change caret position in input field
 
 	var input = el.find('input');
 	var span = el.find('span');
@@ -543,6 +547,8 @@ function handleSave(event)
 
 	if (!el)
 		return;
+		
+	el.attr('draggable', 'true'); // Was turned to false in handleEdit
 
 	var input = el.find('input');
 	var span = el.find('span');
@@ -887,6 +893,9 @@ function handleTouchMove(event)
 
 function ShowModal(title, text)
 {
+	m_OldScroll = [ window.scrollX, window.scrollY ];
+	window.scrollTo(0, 0);
+	
 	$('#modaltitle').text(title);
 	$('#modalcontent').text(text);
 	$('#content').addClass('blur');
@@ -900,4 +909,7 @@ function CloseModal()
 	$('#modal').hide();
 	$('#content').removeClass('blur');
 	$('body').removeClass('modal');
+
+	window.scrollTo(m_OldScroll[0], m_OldScroll[1]);
+	m_OldScroll = null;	
 }
