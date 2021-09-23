@@ -71,11 +71,6 @@ function ExceptionCallback(Throwable $Exception)
 	exit(1);
 }
 
-function ReadInt($file)
-{
-	return intval(trim(file_get_contents($file)));
-}
-
 function file_build_path(...$segments)
 {
     return join(DIRECTORY_SEPARATOR, $segments);
