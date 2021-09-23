@@ -1,0 +1,264 @@
+@charset "UTF-8";
+
+body {
+	background-color: #fff5e8;
+	background-image: url(paper.png);
+	background-repeat: repeat;
+	color: #3b2e2a;
+	font-family: 'Akubin';
+}
+
+body.modal {
+	height: 100vh;
+	overflow: hidden;
+	position: fixed: ;
+}
+
+div#items>.item span.checked {
+	text-decoration-color: #c8555f;
+	text-decoration-line: line-through;
+	text-decoration-style: wavy;
+	text-decoration-thickness: 3px;
+	-webkit-text-decoration-color: #c8555f;
+	-webkit-text-decoration-line: line-through;
+	-webkit-text-decoration-style: wavy;
+	-webkit-text-decoration-thickness: 3px;
+}
+
+div#items>.item, div#lists>.item {
+	background-color: #f7e7d7;
+	border: 2px solid #b8a38f;
+	border-radius: 5px;
+	display: flex;
+	margin-bottom: .5em;
+	padding: .2em;
+}
+
+div#items>.item.onDrag {
+	background-color: #d1baa3;
+	border: 2px solid #453234;
+}
+
+div#items>.item:last-child, div#lists>.item:last-child {
+	margin-bottom: 0;
+}
+
+div#items>.item>div, div#lists>.item>div {
+	padding: 0 .5em;
+}
+
+div#items>.item>div.sortcontainer {
+	display: none;
+}
+
+div#items>.item>div:first-child, div#lists>.item>div:first-child {
+	flex-grow: 1;
+}
+
+div#items>.item>div:first-child>input[type=text], div#lists>.item>div:first-child>input[type=text] {
+	background-color: #eabdb1;
+	border: 2px solid #c8555f;
+	border-radius: 5px;
+	width: 100%;
+}
+
+div#items>.item>div:first-child>span, div#lists>.item>div:first-child>span {
+	cursor: pointer;
+}
+
+div#items>.item>div>a, div#lists>.item>div>a {
+	color: #910926;
+	cursor: pointer;
+}
+
+div#loading {
+	display: block;
+	height: 80px;
+	margin: auto;
+	transform: rotate(45deg);
+	transform-origin: 40px 40px;
+	width: 80px;
+}
+
+div#loading div {
+	animation: heartbeat 1.2s infinite cubic-bezier(.215, .61, .355, 1);
+	background: #910926;
+	height: 32px;
+	left: 32px;
+	position: absolute;
+	top: 32px;
+	width: 32px;
+}
+
+div#loading div:after {
+	border-radius: 50% 50% 0 0;
+	top: -24px;
+}
+
+div#loading div:after, div#loading div:before {
+	background: #910926;
+	content: " ";
+	display: block;
+	height: 32px;
+	position: absolute;
+	width: 32px;
+}
+
+div#loading div:before {
+	border-radius: 50% 0 0 50%;
+	left: -24px;
+}
+
+div#modal {
+	color: #444;
+	display: none;
+	height: 100%;
+	left: 0;
+	margin: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+div#modal>div {
+	left: 50%;
+	margin-right: -50%;
+	max-width: 500px;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+div#modal>div>div {
+	background: #fff;
+	border-color: #aaa;
+	border-radius: 5px;
+	border-style: solid;
+	border-width: 1px;
+	box-shadow: 0 5px 5px #b0b0b0;
+	padding: 1em;
+	text-align: center;
+}
+
+div.add {
+	background-color: #c8555f;
+	border: 2px solid #910926;
+	border-radius: 5px;
+	margin-bottom: 1em;
+	padding: .2em;
+}
+
+div.add>input[type=text] {
+	background-color: #eabdb1;
+	border: 0;
+	box-sizing: border-box;
+	padding: .5em;
+	width: 100%;
+}
+
+div.head {
+	align-items: center;
+	display: flex;
+}
+
+div.head>div>a {
+	color: #c8555f;
+	cursor: pointer;
+	font-size: 2em;
+}
+
+div.head>h1 {
+	flex-grow: 1;
+}
+
+p#modaltitle {
+	font-weight: 700;
+	text-align: center;
+}
+
+#content {
+	display: none;
+	font-size: 1.5em;
+	line-height: 1.6em;
+	margin: 0 auto;
+	max-width: 800px;
+	padding: 0 2em;
+}
+
+.blur {
+	filter: blur(5px);
+	-moz-filter: blur(5px);
+	-ms-filter: blur(5px);
+	-o-filter: blur(5px);
+	-webkit-filter: blur(5px);
+}
+
+@font-face {
+	font-display: block;
+	font-family: 'Akubin';
+	font-style: normal;
+	font-weight: 400;
+	src: url(Akubin.woff2) format('woff2'), url(Akubin.woff) format('woff');
+}
+
+@keyframes heartbeat {
+	to {
+		transform: scale(.9);
+	}
+
+	0%, 60% {
+		transform: scale(.95);
+	}
+
+	39% {
+		transform: scale(.85);
+	}
+
+	45% {
+		transform: scale(1);
+	}
+
+	5% {
+		transform: scale(1.1);
+	}
+}
+
+@media (max-width:48em) {
+	div#items>.item {
+		flex-direction: row-reverse;
+		flex-wrap: wrap;
+	}
+
+	div#items>.item>div.sortcontainer {
+		display: block;
+		touch-action: none;
+	}
+
+	div#items>.item>div:first-child {
+		flex: 1 1 100%;
+	}
+
+	div#items>.item>div:nth-child(2) {
+		order: 4;
+	}
+
+	div#items>.item>div:nth-child(3) {
+		order: 3;
+	}
+
+	div#items>.item>div:nth-child(4) {
+		order: 2;
+	}
+
+	div#modal>div>div {
+		margin: 1em;
+	}
+
+	#content {
+		font-size: 1.2em;
+	}
+
+	#content h1 {
+		font-size: 1.5em;
+	}
+}
