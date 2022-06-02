@@ -8,7 +8,6 @@
 		<link rel="stylesheet" href="support/normalize.css">
 		<link rel="stylesheet" href="support/la/css/la.css">
 		<link rel="stylesheet" href="support/style.css?<?php echo filemtime('support/style.css'); ?>">
-		<script src="support/jquery.js" defer></script>
 		<script src="support/script.js?<?php echo filemtime('support/script.js'); ?>" defer></script>
 		<link rel="shortcut icon" href="support/favicon.ico">
 		<link rel="apple-touch-icon" href="support/apple-touch-icon.png">
