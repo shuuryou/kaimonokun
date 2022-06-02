@@ -1043,6 +1043,8 @@ class kaimonokun {
 		const isItems: boolean = ((mode & UIModes.Items) == UIModes.Items);
 		document.querySelector('div.head a.backbutton')!.parentElement!.style.display = isItems ? 'block' : 'none';
 		document.querySelector('div.head a.sortbutton')!.parentElement!.style.display = isItems ? 'block' : 'none';
+
+		this.m_UIMode = mode;
 	}
 
 	public showModal(title: string, text: string) {
