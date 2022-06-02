@@ -163,7 +163,9 @@ class kaimonokun {
 		this.m_UpdatePending = false;
 		this.m_IsEditing = false;
 
-		this.UIMode = UIModes.Loading;
+		if (!sneaky)
+			this.UIMode = UIModes.Loading;
+
 		this.m_CurrentListId = null;
 
 		document.querySelector('h1')!.innerText = T_ALL_LISTS;
@@ -638,7 +640,7 @@ class kaimonokun {
 
 		let el2;
 		el2 = el.querySelector('.save')! as HTMLElement;
-		el2.parentElement!.style.display = 'none';
+		el2.parentElement!.style.display = 'block';
 
 		el2 = el.querySelector('.edit')! as HTMLElement;
 		el2.parentElement!.style.display = 'none';
@@ -750,7 +752,7 @@ class kaimonokun {
 
 		let el2;
 		el2 = el.querySelector('.save')! as HTMLElement;
-		el2.parentElement!.style.display = 'block';
+		el2.parentElement!.style.display = 'none';
 
 		el2 = el.querySelector('.edit')! as HTMLElement;
 		el2.parentElement!.style.display = 'block';
