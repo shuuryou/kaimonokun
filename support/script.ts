@@ -650,7 +650,7 @@ class kaimonokun {
 
 		if (window.matchMedia('(max-width:48em)').matches) {
 			el2 = el.querySelector('.sortcontainer')! as HTMLElement;
-			el2.parentElement!.style.display = 'none';
+			el2.style.display = 'none';
 		}
 
 		input.focus();
@@ -764,7 +764,7 @@ class kaimonokun {
 
 		if (window.matchMedia('(max-width:48em)').matches) {
 			el2 = el.querySelector('.sortcontainer')! as HTMLElement;
-			el2.parentElement!.style.display = 'block';
+			el2.style.display = 'block';
 		}
 
 		this.m_IsEditing = false;
