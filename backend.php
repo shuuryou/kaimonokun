@@ -174,14 +174,14 @@ function DELLIST()
 
 function GETITEMS()
 {
-	if (empty($_POST['id']))
+	if (empty($_POST['listid']))
 	{
 		http_response_code(500);
 		echo __('T_ERR_MISSING_LIST_ID', array(), FALSE);
 		return;
 	}
 
-	$id = $_POST['id'];
+	$id = $_POST['listid'];
 	
 	$lists_file = file_build_path(LISTS_DIR, LIST_INDEX_FILENAME);
 
