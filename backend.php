@@ -74,10 +74,10 @@ function NEWLIST()
 	
 	uasort($lists, 'mb_strcasecmp');
 	
-	file_put_contents($lists_file, serialize($lists));
+	file_put_contents($lists_file, serialize($lists), LOCK_EX);
 	
 	$list_file = file_build_path(LISTS_DIR, $id);
-	file_put_contents($list_file, serialize(array()));
+	file_put_contents($list_file, serialize(array()), LOCK_EX);
 
 	echo 'OK';
 	echo digest($lists_file);
@@ -132,7 +132,7 @@ function RENLIST()
 
 	uasort($lists, 'mb_strcasecmp');
 	
-	file_put_contents($lists_file, serialize($lists));
+	file_put_contents($lists_file, serialize($lists), LOCK_EX);
 
 	echo 'OK';
 	exit();
@@ -165,7 +165,7 @@ function DELLIST()
 
 		unset($lists[$id]);
 		
-		file_put_contents($lists_file, serialize($lists));
+		file_put_contents($lists_file, serialize($lists), LOCK_EX);
 	}
 
 	echo 'OK';
@@ -256,7 +256,7 @@ function ADDITEM()
 	$id = uniqid('', true);
 	$list[$id] = array('item' => $item, 'checked' => FALSE);
 	
-	file_put_contents($list_file, serialize($list));
+	file_put_contents($list_file, serialize($list), LOCK_EX);
 	
 	echo 'OK';
 	echo digest($list_file);
@@ -334,7 +334,7 @@ function RENITEM()
 	if (!$found)
 		$list[$item_id] = array('item' => $newitem, 'checked' => FALSE);
 	
-	file_put_contents($list_file, serialize($list));
+	file_put_contents($list_file, serialize($list), LOCK_EX);
 
 	echo 'OK';
 	echo digest($list_file);
@@ -411,7 +411,7 @@ function CHECKITEM()
 	if (!$found)
 		$list[$item_id] = array('item' => $newitem, 'checked' => FALSE);
 	
-	file_put_contents($list_file, serialize($list));
+	file_put_contents($list_file, serialize($list), LOCK_EX);
 	
 	echo 'OK';
 	echo digest($list_file);	
@@ -469,7 +469,7 @@ function DELITEM()
 
 	unset($list[$item_id]);
 	
-	file_put_contents($list_file, serialize($list));
+	file_put_contents($list_file, serialize($list), LOCK_EX);
 	
 	echo 'OK';
 	echo digest($list_file);
@@ -510,7 +510,7 @@ function SORTITEMS()
 		
 	uasort($list, 'sort_list_by_checked');
 	
-	file_put_contents($list_file, serialize($list));
+	file_put_contents($list_file, serialize($list), LOCK_EX);
 	
 	echo 'OK';
 	exit();
@@ -574,7 +574,7 @@ function CHANGESORT()
 	$list = $newlist;
 	unset($newlist);
 	
-	file_put_contents($list_file, serialize($list));
+	file_put_contents($list_file, serialize($list), LOCK_EX);
 	
 	echo 'OK';
 	echo digest($list_file);
