@@ -49,10 +49,6 @@ class kaimonokun {
 	// Remembers scroll position for restore after closing modal errors
 	private m_PreModalScrollPos: [number, number] | null;
 
-	// Caches HTML fragments
-	private m_ItemTemplate: string = '';
-	private m_ListTemplate: string = '';
-
 	// State
 	private m_IsEditing: boolean;
 	private m_UpdatePending: boolean;
@@ -84,18 +80,6 @@ class kaimonokun {
 
 	private initialize() {
 		this.UIMode = UIModes.None;
-
-		{
-			let el = document.querySelector('script[data-template="item"]') as HTMLElement;
-			if (el == null) throw 'Item template missing.';
-			this.m_ItemTemplate = el.textContent!.trim();
-		}
-
-		{
-			let el = document.querySelector('script[data-template="list"]') as HTMLElement;
-			if (el == null) throw 'List template missing.';
-			this.m_ListTemplate = el.textContent!.trim();
-		}
 
 		{
 			let el = document.querySelector('div.head a.addtogglebutton') as HTMLElement;
@@ -476,76 +460,74 @@ class kaimonokun {
 	}
 
 	private makeList(listId: string, listName: string) {
-		let tpl = document.createElement('template') as HTMLElement;
-		tpl.innerHTML = this.m_ListTemplate;
-		tpl = tpl.firstElementChild as HTMLElement;
+		const tpl: HTMLTemplateElement = document.getElementById('tpl-list') as HTMLTemplateElement;
+		const content: HTMLElement = tpl.content.firstElementChild as HTMLElement;
 
-		tpl.dataset['listid'] = listId;
+		content.dataset['listid'] = listId;
 
 		let el;
 
-		el = tpl.querySelector('span')! as HTMLElement;
+		el = content.querySelector('span')! as HTMLElement;
 		el.innerText = listName;
 		el.addEventListener('click', (ev) => this.handleClick(ev));
 
-		el = tpl.querySelector('input')! as HTMLElement;
+		el = content.querySelector('input')! as HTMLElement;
 		el.style.display = 'none';
 		el.addEventListener('keyup', (ev) => this.handleEditKeyUp(ev))
 
-		el = tpl.querySelector('.save')! as HTMLElement;
+		el = content.querySelector('.save')! as HTMLElement;
 		el.parentElement!.style.display = 'none';
 		el.addEventListener('click', (ev) => this.handleSave(ev));
 
-		el = tpl.querySelector('.edit')! as HTMLElement;
+		el = content.querySelector('.edit')! as HTMLElement;
 		el.addEventListener('click', (ev) => this.handleEdit(ev));
 
-		el = tpl.querySelector('.erase')!;
+		el = content.querySelector('.erase')!;
 		el.addEventListener('click', (ev) => this.handleErase(ev));
 
-		return tpl;
+		return content;
 	}
 
 	private makeItem(itemId: string, text: string, checked: boolean) {
-		let tpl = document.createElement('template') as HTMLElement;
-		tpl.innerHTML = this.m_ItemTemplate;
-		tpl = tpl.firstElementChild as HTMLElement;
+		const tpl: HTMLTemplateElement = document.getElementById('tpl-item') as HTMLTemplateElement;
+		const content: HTMLElement = tpl.content.firstElementChild as HTMLElement;
 
-		tpl.dataset['itemid'] = itemId;
-		tpl.dataset['checked'] = checked ? '1' : '0';
+		content.dataset['itemid'] = itemId;
+		content.dataset['checked'] = checked ? '1' : '0';
 
-		tpl.addEventListener('dragstart', (ev) => this.handleDrag(ev));
-		tpl.addEventListener('dragend', (ev) => this.handleDragEnd());
-		tpl.addEventListener('dragenter', (ev) => this.handleDragEnter(ev));
-		tpl.addEventListener('dragover', (ev) => this.handleDragOver(ev));
+		content.addEventListener('dragstart', (ev) => this.handleDrag(ev));
+		content.addEventListener('dragend', (ev) => this.handleDragEnd());
+		content.addEventListener('dragenter', (ev) => this.handleDragEnter(ev));
+		content.addEventListener('dragover', (ev) => this.handleDragOver(ev));
 
 		let el;
 
-		el = tpl.querySelector('span')! as HTMLElement;
+		el = content.querySelector('span')! as HTMLElement;
 		if (checked)
 			el.classList.add('checked');
 		el.innerText = text;
 		el.addEventListener('click', (ev) => this.handleClick(ev));
 
-		el = tpl.querySelector('input')! as HTMLElement;
+		el = content.querySelector('input')! as HTMLElement;
 		el.style.display = 'none';
 		el.addEventListener('keyup', (ev) => this.handleEditKeyUp(ev))
 
-		el = tpl.querySelector('.save')! as HTMLElement;
+		el = content.querySelector('.save')! as HTMLElement;
 		el.parentElement!.style.display = 'none';
 		el.addEventListener('click', (ev) => this.handleSave(ev));
 
-		el = tpl.querySelector('.edit')! as HTMLElement;
+		el = content.querySelector('.edit')! as HTMLElement;
 		el.addEventListener('click', (ev) => this.handleEdit(ev));
 
-		el = tpl.querySelector('.erase')! as HTMLElement;
+		el = content.querySelector('.erase')! as HTMLElement;
 		el.addEventListener('click', (ev) => this.handleErase(ev));
 
-		el = tpl.querySelector('.sort')! as HTMLElement;
+		el = content.querySelector('.sort')! as HTMLElement;
 		el.addEventListener('touchstart', (ev) => this.handleTouch(ev));
 		el.addEventListener('touchend', (ev) => this.handleTouchEnd());
 		el.addEventListener('touchmove', (ev) => this.handleTouchMove(ev));
 
-		return tpl;
+		return content;
 	}
 
 	private handleClick(evt: Event) {

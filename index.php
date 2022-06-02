@@ -36,16 +36,16 @@
 			<div id="items"></div>
 		</div>
 	
-		<script type="text/template" data-template="list">
+		<template id="tpl-list">
 			  <div class="item">
 			  	<div><input type="text"><span></span></div>
 			  	<div><a title="<?php echo __('T_BUTTON_SAVE'); ?>" class="save"><i class="las la-check-circle"></i></a></div>
 			  	<div><a title="<?php echo __('T_BUTTON_EDIT'); ?>" class="edit"><i class="las la-pen"></i></a></div>
 			  	<div><a title="<?php echo __('T_BUTTON_ERASE'); ?>" class="erase"><i class="las la-times-circle"></i></a></div>
 			  </div>
-		</script>
+		</template>
 		
-		<script type="text/template" data-template="item">
+		<template id="tpl-item">
 			  <div class="item" draggable="true">
 			  	<div><input type="text"><span></span></div>
 			  	<div class="sortcontainer"><a title="<?php echo __('T_BUTTON_SORT'); ?>" class="sort"><i class="las la-sort"></i></a></div>
@@ -53,30 +53,30 @@
 			  	<div><a title="<?php echo __('T_BUTTON_EDIT'); ?>" class="edit"><i class="las la-pen"></i></a></div>
 			  	<div><a title="<?php echo __('T_BUTTON_ERASE'); ?>" class="erase"><i class="las la-times-circle"></i></a></div>
 			  </div>
-		</script>
+		</template>
 	
 		<div id="modal">
 			<div>
 				<div>
 					<p id="modaltitle"></p>
 					<p id="modalcontent"></p>
-					<button id="modalbutton" onclick="kaimonokun.closeModal()"><?php echo __('T_BUTTON_CLOSE'); ?></button>
+					<button id="modalbutton" onclick="window.kaimonokun.closeModal()"><?php echo __('T_BUTTON_CLOSE'); ?></button>
 				</div>
 			</div>
 		</div>
 		
 		<script>
-			var T_ALL_LISTS							= <?php echo json_encode(T_ALL_LISTS); ?>;
-			var T_WRITE_ITEM_TEXT					= <?php echo json_encode(T_WRITE_ITEM_TEXT); ?>;
-			var T_WRITE_LIST_TEXT					= <?php echo json_encode(T_WRITE_LIST_TEXT); ?>;
-			var T_LIST_WAS_DELETED_TITLE			= <?php echo json_encode(T_LIST_WAS_DELETED_TITLE); ?>;
-			var T_LIST_WAS_DELETED					= <?php echo json_encode(T_LIST_WAS_DELETED); ?>;
-			var T_AJAX_ERROR_TITLE					= <?php echo json_encode(T_AJAX_ERROR_TITLE); ?>;
-			var T_AJAX_ERROR_GENERIC_TEXT			= <?php echo json_encode(T_AJAX_ERROR_GENERIC_TEXT); ?>;
-			var T_EVENTSOURCE_ERROR_TITLE			= <?php echo json_encode(T_EVENTSOURCE_ERROR_TITLE); ?>;
-			var T_EVENTSOURCE_ERROR_GENERIC_TEXT	= <?php echo json_encode(T_EVENTSOURCE_ERROR_GENERIC_TEXT); ?>;
+			var T_ALL_LISTS = <?php echo json_encode(T_ALL_LISTS); ?>;
+			var T_WRITE_ITEM_TEXT = <?php echo json_encode(T_WRITE_ITEM_TEXT); ?>;
+			var T_WRITE_LIST_TEXT = <?php echo json_encode(T_WRITE_LIST_TEXT); ?>;
+			var T_LIST_WAS_DELETED_TITLE = <?php echo json_encode(T_LIST_WAS_DELETED_TITLE); ?>;
+			var T_LIST_WAS_DELETED = <?php echo json_encode(T_LIST_WAS_DELETED); ?>;
+			var T_AJAX_ERROR_TITLE = <?php echo json_encode(T_AJAX_ERROR_TITLE); ?>;
+			var T_AJAX_ERROR_GENERIC_TEXT = <?php echo json_encode(T_AJAX_ERROR_GENERIC_TEXT); ?>;
+			var T_EVENTSOURCE_ERROR_TITLE = <?php echo json_encode(T_EVENTSOURCE_ERROR_TITLE); ?>;
+			var T_EVENTSOURCE_ERROR_GENERIC_TEXT = <?php echo json_encode(T_EVENTSOURCE_ERROR_GENERIC_TEXT); ?>;
 			
-			new kaimonokun(<?php echo json_encode(AUTHLINE); ?>);
+			window.kaimonokun = new kaimonokun(<?php echo json_encode(AUTHLINE); ?>);
 		</script>
 	</body>
 </html>
