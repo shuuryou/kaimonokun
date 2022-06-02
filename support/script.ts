@@ -461,7 +461,7 @@ class kaimonokun {
 
 	private makeList(listId: string, listName: string) {
 		const tpl: HTMLTemplateElement = document.getElementById('tpl-list') as HTMLTemplateElement;
-		const content: HTMLElement = tpl.content.firstElementChild as HTMLElement;
+		const content: HTMLElement = (tpl.content.cloneNode(true) as HTMLElement).firstElementChild as HTMLElement;
 
 		content.dataset['listid'] = listId;
 
@@ -490,7 +490,7 @@ class kaimonokun {
 
 	private makeItem(itemId: string, text: string, checked: boolean) {
 		const tpl: HTMLTemplateElement = document.getElementById('tpl-item') as HTMLTemplateElement;
-		const content: HTMLElement = tpl.content.firstElementChild as HTMLElement;
+		const content: HTMLElement = (tpl.content.cloneNode(true) as HTMLElement).firstElementChild as HTMLElement;
 
 		content.dataset['itemid'] = itemId;
 		content.dataset['checked'] = checked ? '1' : '0';
