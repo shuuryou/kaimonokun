@@ -36,9 +36,9 @@ class kaimonokun {
 	private m_CurrentListId: string | null;
 	private m_CurrentDigest: string | null;
 
-	// Touch drag/drop support for mobile
+	// Touch and drag/drop support
 	private m_TouchMoved: boolean;
-	private m_TouchTarget: HTMLElement | null;
+	private m_DragTarget: HTMLElement | null;
 	private m_TouchTargetCandidates: Array<TouchTargetCandidate>;
 	private m_TouchTime: number; // For testing TOUCH_MIN_TIME_MS 
 
@@ -55,7 +55,7 @@ class kaimonokun {
 
 	constructor(authline: string) {
 		this.m_TouchMoved = false;
-		this.m_TouchTarget = null;
+		this.m_DragTarget = null;
 		this.m_TouchTargetCandidates = [];
 		this.m_TouchTime = -1;
 
@@ -876,14 +876,14 @@ class kaimonokun {
 
 		evt.dataTransfer!.effectAllowed = 'move';
 
-		this.m_TouchTarget = evt.target as HTMLElement;
-		this.m_TouchTarget.classList.add('onDrag');
+		this.m_DragTarget = evt.target as HTMLElement;
+		this.m_DragTarget.classList.add('onDrag');
 	}
 
 	private handleDragEnd() {
-		if (this.m_TouchTarget == null) return;
+		if (this.m_DragTarget == null) return;
 
-		this.m_TouchTarget.classList.remove('onDrag');
+		this.m_DragTarget.classList.remove('onDrag');
 
 		let new_order: string = '';
 
@@ -918,16 +918,11 @@ class kaimonokun {
 				return;
 			});
 
-		this.m_TouchTarget = null;
+		this.m_DragTarget = null;
 	}
 
 	private handleDragOver(evt: DragEvent) {
 		if (evt === null) return;
-		if (this.m_TouchTarget == null) return;
-
-		// Can only drag over item containers, not their children
-		if ((evt.target as HTMLElement).id != 'list')
-			return;
 
 		evt.dataTransfer!.dropEffect = 'move';
 		evt.preventDefault();
@@ -935,17 +930,20 @@ class kaimonokun {
 
 	private handleDragEnter(evt: DragEvent) {
 		if (evt === null) return;
-		if (this.m_TouchTarget == null) return;
+		if (this.m_DragTarget == null) return;
 
 		const target_el: HTMLElement = evt.target as HTMLElement;
 
+		if (target_el.nodeType != Node.ELEMENT_NODE)
+			return;
+
 		// Can only enter item contaienrs, not their children
-		if (!target_el.classList.contains('list'))
+		if (!target_el.classList.contains('item'))
 			return;
 
 		evt.dataTransfer!.dropEffect = 'move';
 
-		target_el.insertBefore(this.m_TouchTarget, target_el);
+		target_el.parentNode!.insertBefore(this.m_DragTarget, target_el);
 		evt.preventDefault();
 	}
 
@@ -965,7 +963,7 @@ class kaimonokun {
 			return; // No item container, WTF?
 
 		// Found the item container!
-		this.m_TouchTarget = el;
+		this.m_DragTarget = el;
 
 		// Define valid destinations for dragging over
 		let ttcs: Array<TouchTargetCandidate> = [ ];
@@ -989,25 +987,25 @@ class kaimonokun {
 	}
 
 	private handleTouchEnd() {
-		if (this.m_TouchTarget === null) return;
+		if (this.m_DragTarget === null) return;
 
 		if (!this.m_TouchMoved || (Date.now() - this.m_TouchTime) < kaimonokun.TOUCH_MIN_TIME_MS)
 			return;
 
-		this.m_TouchTarget.classList.remove('onDrag');
+		this.m_DragTarget.classList.remove('onDrag');
 		this.handleDragEnd();
 	}
 
 	private handleTouchMove(evt: TouchEvent) {
 		if (evt === null) return;
-		if (this.m_TouchTarget === null) return;
+		if (this.m_DragTarget === null) return;
 
 		if ((Date.now() - this.m_TouchTime) < kaimonokun.TOUCH_MIN_TIME_MS)
 			return;
 
 		if (!this.m_TouchMoved) {
 			// First movement of finger
-			this.m_TouchTarget.classList.add('onDrag');
+			this.m_DragTarget.classList.add('onDrag');
 			this.m_TouchMoved = true;
 		}
 
@@ -1016,7 +1014,7 @@ class kaimonokun {
 		const client_x: number = evt.changedTouches[0]!.pageX;
 		const client_y: number = evt.changedTouches[0]!.pageY;
 
-		const tt = this.m_TouchTarget;
+		const tt = this.m_DragTarget;
 
 		this.m_TouchTargetCandidates.some(function (item) {
 			if (client_x < item.startX || client_x > item.endX || client_y < item.startY || client_y > item.endY)
