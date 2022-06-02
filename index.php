@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="support/normalize.css">
 		<link rel="stylesheet" href="support/la/css/la.css">
 		<link rel="stylesheet" href="support/style.css?<?php echo filemtime('support/style.css'); ?>">
-		<script src="support/script.js?<?php echo filemtime('support/script.js'); ?>" defer></script>
+		<script src="support/script.js?<?php echo filemtime('support/script.js'); ?>"></script>
 		<link rel="shortcut icon" href="support/favicon.ico">
 		<link rel="apple-touch-icon" href="support/apple-touch-icon.png">
 		<meta name="apple-mobile-web-app-capable" content="yes">
@@ -60,7 +60,7 @@
 				<div>
 					<p id="modaltitle"></p>
 					<p id="modalcontent"></p>
-					<button id="modalbutton" onclick="CloseModal()"><?php echo __('T_BUTTON_CLOSE'); ?></button>
+					<button id="modalbutton" onclick="kaimonokun.closeModal()"><?php echo __('T_BUTTON_CLOSE'); ?></button>
 				</div>
 			</div>
 		</div>
@@ -76,7 +76,7 @@
 			var T_EVENTSOURCE_ERROR_TITLE			= <?php echo json_encode(T_EVENTSOURCE_ERROR_TITLE); ?>;
 			var T_EVENTSOURCE_ERROR_GENERIC_TEXT	= <?php echo json_encode(T_EVENTSOURCE_ERROR_GENERIC_TEXT); ?>;
 			
-			var AUTHLINE = <?php echo json_encode(AUTHLINE); ?>;
+			new kaimonokun(<?php echo json_encode(AUTHLINE); ?>);
 		</script>
 	</body>
 </html>
