@@ -891,7 +891,8 @@ class kaimonokun {
 		new_order = new_order.slice(0, -1);
 
 		let postData: FormData = new FormData();
-		postData.append('what', 'm_CurrentListId');
+		postData.append('what', 'changesort');
+		postData.append('listid', this.m_CurrentListId!);
 		postData.append('neworder', new_order);
 
 		let requestOptions: RequestInit =
