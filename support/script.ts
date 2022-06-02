@@ -747,6 +747,8 @@ class kaimonokun {
 
 		// done:
 
+		span.innerText = newtext;
+
 		input.style.display = 'none';
 		span.style.display = 'block';
 
